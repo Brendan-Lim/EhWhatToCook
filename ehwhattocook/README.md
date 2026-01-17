@@ -53,9 +53,6 @@ Create `ehwhattocook_backend/.env` with:
 
 ```env
 OPENAI_API_KEY=your_key_here
-OPENAI_MODEL=gpt-4o-mini
-OPENAI_IMAGE_MODEL=dall-e-2
-PORT=3000
 ```
 
 The frontend proxies `/api` to the backend in development.
