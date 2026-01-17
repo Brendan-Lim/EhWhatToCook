@@ -55,10 +55,29 @@ function App() {
       setApiResult(data)
     } catch (error) {
       setApiError(error.message || 'Something went wrong.')
-    } finally {
+  } finally {
       setIsLoading(false)
     }
   }
+
+  const getRecipesFromResponse = () => {
+    if (!apiResult) return []
+    if (Array.isArray(apiResult.recipes)) return apiResult.recipes
+    if (Array.isArray(apiResult.meals)) return apiResult.meals
+    const raw = apiResult?.meals?.raw
+    if (typeof raw === 'string') {
+      try {
+        const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim()
+        const parsed = JSON.parse(cleaned)
+        if (Array.isArray(parsed?.meals)) return parsed.meals
+      } catch (error) {
+        return []
+      }
+    }
+    return []
+  }
+
+  const recipesToRender = getRecipesFromResponse()
 
   return (
     <>
@@ -235,86 +254,87 @@ function App() {
                   {apiError}
                 </div>
               ) : null}
-              {apiResult ? (
-                <pre className="bg-light p-3 rounded">
-                  {JSON.stringify(apiResult, null, 2)}
-                </pre>
-              ) : null}
             </div>
           </div>
 
         </div>
-      </div>
-<div className="d-flex justify-content-center">
-  <div className="card">
-    <div className="content">
-      <div className="back">
-        <div className="back-content">
-          <img src="logowhite.png" alt="logo" width="auto" height="200px"/>
-          <strong>Reveal Recipe</strong>
-        </div>
-      </div>
+        {apiResult && recipesToRender.length ? (
+          <div className="row g-4 mt-4 justify-content-center">
+            {recipesToRender.map((recipe, index) => (
+              <div key={index} className="col-12 col-md-4 d-flex justify-content-center">
+                <div className="card recipe-card">
+                  <div className="content">
+                    <div className="back">
+                      <div className="back-content recipe-back-content">
+                        <img
+                          src="logowhite.png"
+                          alt="logo"
+                          className="recipe-logo"
+                        />
+                        <strong>{recipe.name}</strong>
+                        {recipe.description ? (
+                          <p className="recipe-description">
+                            {recipe.description}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
 
-      <div className="front">
-        <div className="img">
-          <div className="circle" />
-          <div className="circle" id="right" />
-          <div className="circle" id="bottom" />
-        </div>
-
-        <div className="front-content">
-          <small className="badge">Pasta</small>
-
-          <div className="description">
-            <div className="title">
-              <p className="title">
-                <strong>Spaghetti Bolognese</strong>
-              </p>
-
-              <svg
-                fillRule="nonzero"
-                height={15}
-                width={15}
-                viewBox="0 0 256 256"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-              >
-                <g
-                  style={{ mixBlendMode: 'normal' }}
-                  textAnchor="none"
-                  fontSize="none"
-                  fontWeight="none"
-                  fontFamily="none"
-                  strokeDashoffset={0}
-                  strokeDasharray=""
-                  strokeMiterlimit={10}
-                  strokeLinejoin="miter"
-                  strokeLinecap="butt"
-                  strokeWidth={1}
-                  stroke="none"
-                  fillRule="nonzero"
-                  fill="#20c997"
-                >
-                  <g transform="scale(8,8)">
-                    <path d="M25,27l-9,-6.75l-9,6.75v-23h18z" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-
-            <p className="card-footer">
-              30 Mins &nbsp; | &nbsp; 1 Serving | &nbsp; 500 Calories
-            </p>
+                    <div className="front">
+                      <div className="front-content">
+                        <div className="recipe-front-title">{recipe.name}</div>
+                        <div className="recipe-meta">
+                          <span>
+                            Time:{' '}
+                            {recipe.timeTakenMinutes
+                              ? `${recipe.timeTakenMinutes} min`
+                              : 'TBD'}
+                          </span>
+                          <span>
+                            Servings:{' '}
+                            {recipe.servings ? recipe.servings : 'TBD'}
+                          </span>
+                          <span>
+                            Calories:{' '}
+                            {recipe.estimatedMacros?.calories ?? 'TBD'}
+                          </span>
+                        </div>
+                        <div className="description">
+                          {Array.isArray(recipe.steps) && recipe.steps.length ? (
+                            <ol className="recipe-steps">
+                              {recipe.steps.map((step, stepIndex) => (
+                                <li key={stepIndex}>{step}</li>
+                              ))}
+                            </ol>
+                          ) : (
+                            <p>No steps provided.</p>
+                          )}
+                          <div className="recipe-macros">
+                            <span>
+                              Protein:{' '}
+                              {recipe.estimatedMacros?.protein_g ?? 0}g
+                            </span>
+                            <span>
+                              Carbs:{' '}
+                              {recipe.estimatedMacros?.carbs_g ?? 0}g
+                            </span>
+                            <span>
+                              Fat:{' '}
+                              {recipe.estimatedMacros?.fat_g ?? 0}g
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+        ) : null}
       </div>
-    </div>
-  </div>
-</div>
-  <div>
-    <h2>Title</h2>
-    <p>Instructions how to make meal</p>
-  </div>
+
+      <footer>©2026 Made by <a href="https://github.com/Brendan-Lim">Brendan</a> & <a href="https://github.com/Matthiaschanjk">Matthias</a></footer>
     </>
 
     
