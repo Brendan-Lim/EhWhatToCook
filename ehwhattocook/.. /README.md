@@ -28,8 +28,6 @@ reduce food waste, and stay aligned with fitness goals.
 ## Screenshots
 
 ![Home screen](public/mainpage.png)
-![Ingredient input and profile](public/recipe1.jpg)
-![Branding](public/logo.png)
 
 ## Local Development
 
