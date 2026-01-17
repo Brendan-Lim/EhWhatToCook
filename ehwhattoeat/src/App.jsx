@@ -65,10 +65,10 @@ function App() {
       <nav className="navbar navbar-light bg-light">
         <a className="navbar-brand" href="#">
           <img
-            src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-            width="30"
-            height="30"
-            alt="Bootstrap"
+            src="logo.png"
+            width="auto"
+            height= "100"
+            alt="logo"
           />
         </a>
       </nav>
@@ -166,7 +166,7 @@ function App() {
                 <div className="col-6">
                   <label className="form-label">Sex</label>
                   <select
-                    className="form-select"
+                    className="form-select mt-2 ml-1"
                     value={profile.sex}
                     onChange={(e) =>
                       setProfile({ ...profile, sex: e.target.value })
@@ -179,7 +179,7 @@ function App() {
                 <div className="col-6">
                   <label className="form-label">Activity</label>
                   <select
-                    className="form-select"
+                    className="form-select mt-2 ml-1"
                     value={profile.activityFrequency}
                     onChange={(e) =>
                       setProfile({
@@ -196,7 +196,7 @@ function App() {
                 <div className="col-6">
                   <label className="form-label">Goal</label>
                   <select
-                    className="form-select"
+                    className="form-select ml-1"
                     value={profile.goal}
                     onChange={(e) =>
                       setProfile({ ...profile, goal: e.target.value })
@@ -245,7 +245,76 @@ function App() {
 
         </div>
       </div>
+<div className="d-flex justify-content-center">
+  <div className="card">
+    <div className="content">
+      <div className="back">
+        <div className="back-content">
+          <img src="logowhite.png" alt="logo" width="auto" height="200px"/>
+          <strong>Hover Me</strong>
+        </div>
+      </div>
+
+      <div className="front">
+        <div className="img">
+          <div className="circle" />
+          <div className="circle" id="right" />
+          <div className="circle" id="bottom" />
+        </div>
+
+        <div className="front-content">
+          <small className="badge">Pasta</small>
+
+          <div className="description">
+            <div className="title">
+              <p className="title">
+                <strong>Spaghetti Bolognese</strong>
+              </p>
+
+              <svg
+                fillRule="nonzero"
+                height={15}
+                width={15}
+                viewBox="0 0 256 256"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+              >
+                <g
+                  style={{ mixBlendMode: 'normal' }}
+                  textAnchor="none"
+                  fontSize="none"
+                  fontWeight="none"
+                  fontFamily="none"
+                  strokeDashoffset={0}
+                  strokeDasharray=""
+                  strokeMiterlimit={10}
+                  strokeLinejoin="miter"
+                  strokeLinecap="butt"
+                  strokeWidth={1}
+                  stroke="none"
+                  fillRule="nonzero"
+                  fill="#20c997"
+                >
+                  <g transform="scale(8,8)">
+                    <path d="M25,27l-9,-6.75l-9,6.75v-23h18z" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <p className="card-footer">
+              30 Mins &nbsp; | &nbsp; 1 Serving
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
     </>
+
+    
   )
 }
 
