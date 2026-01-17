@@ -5,6 +5,8 @@ personalized, nutrition-aware meal ideas. It combines a simple ingredient
 capture flow with profile-based calorie targets so users can cook faster,
 reduce food waste, and stay aligned with fitness goals.
 
+This project was created with Matthiaschanjk for Hack&Roll 2026.
+
 ## What It Does
 
 - Accepts ingredients you already have on hand.
